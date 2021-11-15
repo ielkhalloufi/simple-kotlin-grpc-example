@@ -20,9 +20,10 @@ import io.grpc.ManagedChannel
 import io.grpc.ManagedChannelBuilder
 import io.grpc.StatusException
 import io.grpc.examples.helloworld.GreeterGrpcKt.GreeterCoroutineStub
-import kotlinx.coroutines.asCoroutineDispatcher
-import kotlinx.coroutines.asExecutor
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 import java.io.Closeable
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
@@ -40,6 +41,20 @@ class HelloWorldClient(val channel: ManagedChannel) : Closeable {
         }
     }
 
+    fun streamGreet(s: String) = runBlocking {
+        val request = helloRequest { name = s }
+        val stream = stub.sayHelloStream(request)
+        stream.collect { response ->
+            println(response.message)
+        }
+    }
+
+    suspend fun bidiGreet(producer: Flow<HelloRequest>): Unit = coroutineScope {
+        stub.biDiSayHelloStream(producer).collect { helloResponse ->
+            println(helloResponse.message)
+        }
+    }
+
     override fun close() {
         channel.shutdown().awaitTermination(5, TimeUnit.SECONDS)
     }
@@ -49,20 +64,29 @@ class HelloWorldClient(val channel: ManagedChannel) : Closeable {
  * Greeter, uses first argument as name to greet if present;
  * greets "world" otherwise.
  */
-fun main(args: Array<String>) {
+suspend fun main(args: Array<String>) {
     val isRemote = args.size == 1
 
     Executors.newFixedThreadPool(10).asCoroutineDispatcher().use { dispatcher ->
-        val builder = if (isRemote)
-            ManagedChannelBuilder.forTarget(args[0].removePrefix("https://") + ":443").useTransportSecurity()
-        else
-            ManagedChannelBuilder.forTarget("localhost:50051").usePlaintext()
+        val builder = when {
+            isRemote -> ManagedChannelBuilder.forTarget(args[0].removePrefix("https://") + ":443").useTransportSecurity()
+            else -> ManagedChannelBuilder.forTarget("localhost:50051").usePlaintext()
+        }
 
         HelloWorldClient(
             builder.executor(dispatcher.asExecutor()).build()
         ).use {
-            val user = args.singleOrNull() ?: "world"
-            it.greet(user)
+            val user = args.singleOrNull() ?: "World"
+            // it.greet(user)
+            // it.streamGreet(user)
+
+            val helloFlow = flow {
+                while (true) {
+                    delay(1000)
+                    emit(helloRequest { name = user })
+                }
+            }
+            it.bidiGreet(helloFlow)
         }
     }
 }

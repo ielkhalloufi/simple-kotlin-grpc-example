@@ -18,6 +18,10 @@ package io.grpc.examples.helloworld
 
 import io.grpc.Server
 import io.grpc.ServerBuilder
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 
 class HelloWorldServer(val port: Int) {
     val server: Server = ServerBuilder
@@ -48,6 +52,20 @@ class HelloWorldServer(val port: Int) {
     private class HelloWorldService : GreeterGrpcKt.GreeterCoroutineImplBase() {
         override suspend fun sayHello(request: HelloRequest) = helloReply {
             message = "Hello ${request.name}"
+        }
+
+        override fun sayHelloStream(request: HelloRequest): Flow<HelloReply> = flow {
+            while (true) {
+                delay(1000)
+                emit(helloReply { message = "Hello, ${request.name}" })
+            }
+        }
+
+        override fun biDiSayHelloStream(requests: Flow<HelloRequest>): Flow<HelloReply> {
+            return requests.map { request ->
+                println(request)
+                helloReply { message = "Hello, ${request.name}" }
+            }
         }
     }
 }
