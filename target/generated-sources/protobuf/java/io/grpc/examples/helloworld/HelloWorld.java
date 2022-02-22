@@ -35,10 +35,16 @@ public final class HelloWorld {
     java.lang.String[] descriptorData = {
       "\n\021hello_world.proto\022\033io.grpc.examples.he" +
       "lloworld\"\034\n\014HelloRequest\022\014\n\004name\030\001 \001(\t\"\035" +
-      "\n\nHelloReply\022\017\n\007message\030\001 \001(\t2k\n\007Greeter" +
-      "\022`\n\010SayHello\022).io.grpc.examples.hellowor" +
-      "ld.HelloRequest\032\'.io.grpc.examples.hello" +
-      "world.HelloReply\"\000B\002P\001b\006proto3"
+      "\n\nHelloReply\022\017\n\007message\030\001 \001(\t2\305\002\n\007Greete" +
+      "r\022`\n\010SayHello\022).io.grpc.examples.hellowo" +
+      "rld.HelloRequest\032\'.io.grpc.examples.hell" +
+      "oworld.HelloReply\"\000\022h\n\016SayHelloStream\022)." +
+      "io.grpc.examples.helloworld.HelloRequest" +
+      "\032\'.io.grpc.examples.helloworld.HelloRepl" +
+      "y\"\0000\001\022n\n\022BiDiSayHelloStream\022).io.grpc.ex" +
+      "amples.helloworld.HelloRequest\032\'.io.grpc" +
+      ".examples.helloworld.HelloReply\"\000(\0010\001B\002P" +
+      "\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

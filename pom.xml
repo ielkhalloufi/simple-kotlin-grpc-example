@@ -12,10 +12,10 @@
     <java.version>17</java.version>
     <kotlin.version>1.5.31</kotlin.version>
     <kotlinx.coroutines.version>1.5.2</kotlinx.coroutines.version>
-    <grpc.version>1.42.0</grpc.version>
-    <grpc.kotlin.version>1.2.0</grpc.kotlin.version>
+    <grpc.version>1.44.1</grpc.version>
+    <grpc.kotlin.version>1.2.1</grpc.kotlin.version>
     <!-- Breaking change in 3.18.0 and higher: https://issueexplorer.com/issue/protocolbuffers/protobuf/8985 -->
-    <protobuf.version>3.17.3</protobuf.version>
+    <protobuf.version>3.19.4</protobuf.version>
   </properties>
 
   <dependencies>
@@ -42,7 +42,7 @@
     <dependency>
       <groupId>io.grpc</groupId>
       <artifactId>grpc-stub</artifactId>
-      <version>1.42.0</version>
+      <version>${grpc.version}</version>
     </dependency>
     <dependency>
       <groupId>io.grpc</groupId>

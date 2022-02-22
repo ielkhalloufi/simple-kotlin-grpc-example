@@ -8,7 +8,7 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
  * </pre>
  */
 @javax.annotation.Generated(
-    value = "by gRPC proto compiler (version 1.42.0)",
+    value = "by gRPC proto compiler (version 1.44.1)",
     comments = "Source: hello_world.proto")
 @io.grpc.stub.annotations.GrpcGenerated
 public final class GreeterGrpc {
@@ -47,6 +47,68 @@ public final class GreeterGrpc {
       }
     }
     return getSayHelloMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<io.grpc.examples.helloworld.HelloRequest,
+      io.grpc.examples.helloworld.HelloReply> getSayHelloStreamMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "SayHelloStream",
+      requestType = io.grpc.examples.helloworld.HelloRequest.class,
+      responseType = io.grpc.examples.helloworld.HelloReply.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+  public static io.grpc.MethodDescriptor<io.grpc.examples.helloworld.HelloRequest,
+      io.grpc.examples.helloworld.HelloReply> getSayHelloStreamMethod() {
+    io.grpc.MethodDescriptor<io.grpc.examples.helloworld.HelloRequest, io.grpc.examples.helloworld.HelloReply> getSayHelloStreamMethod;
+    if ((getSayHelloStreamMethod = GreeterGrpc.getSayHelloStreamMethod) == null) {
+      synchronized (GreeterGrpc.class) {
+        if ((getSayHelloStreamMethod = GreeterGrpc.getSayHelloStreamMethod) == null) {
+          GreeterGrpc.getSayHelloStreamMethod = getSayHelloStreamMethod =
+              io.grpc.MethodDescriptor.<io.grpc.examples.helloworld.HelloRequest, io.grpc.examples.helloworld.HelloReply>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "SayHelloStream"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  io.grpc.examples.helloworld.HelloRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  io.grpc.examples.helloworld.HelloReply.getDefaultInstance()))
+              .setSchemaDescriptor(new GreeterMethodDescriptorSupplier("SayHelloStream"))
+              .build();
+        }
+      }
+    }
+    return getSayHelloStreamMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<io.grpc.examples.helloworld.HelloRequest,
+      io.grpc.examples.helloworld.HelloReply> getBiDiSayHelloStreamMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "BiDiSayHelloStream",
+      requestType = io.grpc.examples.helloworld.HelloRequest.class,
+      responseType = io.grpc.examples.helloworld.HelloReply.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
+  public static io.grpc.MethodDescriptor<io.grpc.examples.helloworld.HelloRequest,
+      io.grpc.examples.helloworld.HelloReply> getBiDiSayHelloStreamMethod() {
+    io.grpc.MethodDescriptor<io.grpc.examples.helloworld.HelloRequest, io.grpc.examples.helloworld.HelloReply> getBiDiSayHelloStreamMethod;
+    if ((getBiDiSayHelloStreamMethod = GreeterGrpc.getBiDiSayHelloStreamMethod) == null) {
+      synchronized (GreeterGrpc.class) {
+        if ((getBiDiSayHelloStreamMethod = GreeterGrpc.getBiDiSayHelloStreamMethod) == null) {
+          GreeterGrpc.getBiDiSayHelloStreamMethod = getBiDiSayHelloStreamMethod =
+              io.grpc.MethodDescriptor.<io.grpc.examples.helloworld.HelloRequest, io.grpc.examples.helloworld.HelloReply>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "BiDiSayHelloStream"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  io.grpc.examples.helloworld.HelloRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  io.grpc.examples.helloworld.HelloReply.getDefaultInstance()))
+              .setSchemaDescriptor(new GreeterMethodDescriptorSupplier("BiDiSayHelloStream"))
+              .build();
+        }
+      }
+    }
+    return getBiDiSayHelloStreamMethod;
   }
 
   /**
@@ -110,6 +172,20 @@ public final class GreeterGrpc {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSayHelloMethod(), responseObserver);
     }
 
+    /**
+     */
+    public void sayHelloStream(io.grpc.examples.helloworld.HelloRequest request,
+        io.grpc.stub.StreamObserver<io.grpc.examples.helloworld.HelloReply> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSayHelloStreamMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public io.grpc.stub.StreamObserver<io.grpc.examples.helloworld.HelloRequest> biDiSayHelloStream(
+        io.grpc.stub.StreamObserver<io.grpc.examples.helloworld.HelloReply> responseObserver) {
+      return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getBiDiSayHelloStreamMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -119,6 +195,20 @@ public final class GreeterGrpc {
                 io.grpc.examples.helloworld.HelloRequest,
                 io.grpc.examples.helloworld.HelloReply>(
                   this, METHODID_SAY_HELLO)))
+          .addMethod(
+            getSayHelloStreamMethod(),
+            io.grpc.stub.ServerCalls.asyncServerStreamingCall(
+              new MethodHandlers<
+                io.grpc.examples.helloworld.HelloRequest,
+                io.grpc.examples.helloworld.HelloReply>(
+                  this, METHODID_SAY_HELLO_STREAM)))
+          .addMethod(
+            getBiDiSayHelloStreamMethod(),
+            io.grpc.stub.ServerCalls.asyncBidiStreamingCall(
+              new MethodHandlers<
+                io.grpc.examples.helloworld.HelloRequest,
+                io.grpc.examples.helloworld.HelloReply>(
+                  this, METHODID_BI_DI_SAY_HELLO_STREAM)))
           .build();
     }
   }
@@ -150,6 +240,22 @@ public final class GreeterGrpc {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getSayHelloMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void sayHelloStream(io.grpc.examples.helloworld.HelloRequest request,
+        io.grpc.stub.StreamObserver<io.grpc.examples.helloworld.HelloReply> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncServerStreamingCall(
+          getChannel().newCall(getSayHelloStreamMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public io.grpc.stub.StreamObserver<io.grpc.examples.helloworld.HelloRequest> biDiSayHelloStream(
+        io.grpc.stub.StreamObserver<io.grpc.examples.helloworld.HelloReply> responseObserver) {
+      return io.grpc.stub.ClientCalls.asyncBidiStreamingCall(
+          getChannel().newCall(getBiDiSayHelloStreamMethod(), getCallOptions()), responseObserver);
+    }
   }
 
   /**
@@ -177,6 +283,14 @@ public final class GreeterGrpc {
     public io.grpc.examples.helloworld.HelloReply sayHello(io.grpc.examples.helloworld.HelloRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getSayHelloMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public java.util.Iterator<io.grpc.examples.helloworld.HelloReply> sayHelloStream(
+        io.grpc.examples.helloworld.HelloRequest request) {
+      return io.grpc.stub.ClientCalls.blockingServerStreamingCall(
+          getChannel(), getSayHelloStreamMethod(), getCallOptions(), request);
     }
   }
 
@@ -210,6 +324,8 @@ public final class GreeterGrpc {
   }
 
   private static final int METHODID_SAY_HELLO = 0;
+  private static final int METHODID_SAY_HELLO_STREAM = 1;
+  private static final int METHODID_BI_DI_SAY_HELLO_STREAM = 2;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -232,6 +348,10 @@ public final class GreeterGrpc {
           serviceImpl.sayHello((io.grpc.examples.helloworld.HelloRequest) request,
               (io.grpc.stub.StreamObserver<io.grpc.examples.helloworld.HelloReply>) responseObserver);
           break;
+        case METHODID_SAY_HELLO_STREAM:
+          serviceImpl.sayHelloStream((io.grpc.examples.helloworld.HelloRequest) request,
+              (io.grpc.stub.StreamObserver<io.grpc.examples.helloworld.HelloReply>) responseObserver);
+          break;
         default:
           throw new AssertionError();
       }
@@ -242,6 +362,9 @@ public final class GreeterGrpc {
     public io.grpc.stub.StreamObserver<Req> invoke(
         io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
+        case METHODID_BI_DI_SAY_HELLO_STREAM:
+          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.biDiSayHelloStream(
+              (io.grpc.stub.StreamObserver<io.grpc.examples.helloworld.HelloReply>) responseObserver);
         default:
           throw new AssertionError();
       }
@@ -294,6 +417,8 @@ public final class GreeterGrpc {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new GreeterFileDescriptorSupplier())
               .addMethod(getSayHelloMethod())
+              .addMethod(getSayHelloStreamMethod())
+              .addMethod(getBiDiSayHelloStreamMethod())
               .build();
         }
       }
